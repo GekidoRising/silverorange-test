@@ -48,7 +48,7 @@ export default function PostList(props: PostListProps) {
     return post;
   }
 
-  function getText(): JSX.Element | JSX.Element[] {
+  function getContent(): JSX.Element | JSX.Element[] {
     switch (dataState) {
       case DataState.Unloaded:
         return <Text>The posts have not been loaded yet</Text>;
@@ -57,10 +57,19 @@ export default function PostList(props: PostListProps) {
       case DataState.Loaded:
         return renderPosts();
       case DataState.Failed:
-        return <Text>The posts have failed to load</Text>;
+        return renderRetry();
       default:
         return <Text>INVALID STATE</Text>;
     }
+  }
+
+  function renderRetry() {
+    return (
+      <View>
+        <Text>The posts have failed to load</Text>
+        <Button onPress={() => tryLoad()} title="Try again" />
+      </View>
+    );
   }
 
   function renderPosts() {
@@ -78,11 +87,7 @@ export default function PostList(props: PostListProps) {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <Text>{getText()}</Text>
-    </View>
-  );
+  return <View style={styles.container}>{getContent()}</View>;
 }
 
 const styles = StyleSheet.create({
