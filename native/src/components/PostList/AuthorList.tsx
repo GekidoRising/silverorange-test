@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { PostEntity } from './PostEntity';
+import { PostEntity, PostAuthor } from './PostEntity';
 import SelectableAuthor from './SelectableAuthor';
 
 interface AuthorListProps {
@@ -16,15 +16,29 @@ interface AuthorListProps {
 export default function AuthorList(props: AuthorListProps) {
   const [selectedId, setSelectedId] = useState<string>('');
 
-  function renderSelectableAuthor(post: PostEntity) {
+  function getUniqueAuthors(): PostAuthor[] {
+    return props.posts
+      .map((post) => post.author)
+      .filter(
+        (a, index, authors) =>
+          authors.findIndex((other) => other.id == a.id) == index
+      )
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  function renderSelectableAuthor(author: PostAuthor) {
     return (
       <SelectableAuthor
-        author={post.author}
-        selected={post.author.id == selectedId}
+        author={author}
+        selected={author.id == selectedId}
         onTouch={(id) => setSelectedId(selectedId == id ? '' : id)}
       />
     );
   }
 
-  return <View>{props.posts.map((post) => renderSelectableAuthor(post))}</View>;
+  return (
+    <View>
+      {getUniqueAuthors().map((author) => renderSelectableAuthor(author))}
+    </View>
+  );
 }

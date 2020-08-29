@@ -84,8 +84,10 @@ export default function PostList(props: PostListProps) {
   function renderPosts() {
     return (
       <View>
-        <Text>Authors</Text>
-        <ScrollView>
+        <Text style={{ margin: 10, fontWeight: 'bold', fontSize: 16 }}>
+          Authors
+        </Text>
+        <ScrollView style={{ margin: 10 }}>
           <AuthorList posts={posts} />
         </ScrollView>
         <ScrollView>
