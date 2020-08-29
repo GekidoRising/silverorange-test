@@ -1,0 +1,24 @@
+While it clearly serves its purpose as a gallery of robots, I noticed there are a few discrepencies in the source data, and I also feel there are a few improvements that could be made regarding code styling and naming. I also feel a few improvements could be made to the data presentation to make things a little more streamlined and intuitive
+
+Regarding the overall design of the app, I have a few suggestions:
+-I'd suggest looking into ordering the data so that it's easier to find who you're looking for. I'd recommend either ordering it by name, date, or possibly providing the option for the user to select either.
+-It might be a little cumbersome to have to explictly click on each name to view their image. With all the spare room you have next to the name and date, it might not be a bad idea to throw on a thumbnail of the robot's image. Alternatively, you could arrange the data in a grid formation if you wanted to save some room.
+
+--CODE STYLING/FORMAT/ISSUES--
+--ALL SUGGESTIONS TAKE PLACE IN THE FILE App.js--
+
+The App class appears to be taking on a lot of responsibility. While it may not be that long in its current state, it might still really help simplify its readability by breaking it up into itself and an individual Robot list item.
+
+Throughout the file, I'm noticing the spacing and indenting on various lines seems to be inconsistent. I might suggest looking into using Prettier to help format your code.
+
+A lot of the rendering code seems to use inline styling. You'd actually get a pretty decent performance boost if you created the styles beforehand using StyleSheet.create().
+
+In the source data, I noticed a few issues:
+-LINE 11: The 'name' variable is typoed as 'namee'
+-LINE 12: The provided image link is invalid as there appears to be an extra h at the very start (hhttps)
+
+In your class, I have a few suggestions to help improve readability:
+-LINE 31: While viewRobo is technically a valid name, it would be more consistent to rename it to viewRobot
+-LINE 32/LINE 38: theRobot as a variable name lacks a bit of clarity, especially in the latter case as it's referring to specifically the currently selected robot. For the former, I might suggest just 'robot' and for the latter, perhaps 'selectedRobot'
+
+LINE 40: The way the robot renderables are being built could be improved by using data.map() instead of data.forEach(), the former being a much cleaner way of performing the same task. Furthermore, when building the list, I'm getting a warning that the elements are lacking keys. When rendering an array of elements, react has to make sure it knows who updates when, so you'll probably need to add an ID field of some sort to your data, and then render each element with a 'key' prop that points to that id.
