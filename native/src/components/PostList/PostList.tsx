@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { stringify } from 'querystring';
+import { PostAuthor, PostEntity } from './PostEntity';
+import { JSXElement } from '@babel/types';
 
 interface PostListProps {
   src: string;
@@ -14,7 +16,7 @@ enum DataState {
 }
 
 export default function PostList(props: PostListProps) {
-  const [posts, setPosts] = useState<any>(null);
+  const [posts, setPosts] = useState<PostEntity[]>([]);
   const [dataState, setDataState] = useState<DataState>(DataState.Unloaded);
 
   useEffect(() => {
@@ -33,23 +35,36 @@ export default function PostList(props: PostListProps) {
           setDataState(DataState.Failed);
         } else {
           setDataState(DataState.Loaded);
+          setPosts(json);
         }
       });
   }
 
-  function getText(): string {
+  function getText(): JSX.Element | JSX.Element[] {
     switch (dataState) {
       case DataState.Unloaded:
-        return 'The posts have not been loaded yet';
+        return <Text>The posts have not been loaded yet</Text>;
       case DataState.Loading:
-        return 'The posts are loading';
+        return <Text>The posts are loading</Text>;
       case DataState.Loaded:
-        return 'The posts have loaded!';
+        return renderPosts();
       case DataState.Failed:
-        return 'The posts failed to load';
+        return <Text>The posts have failed to load</Text>;
       default:
-        return 'INVALID STATE';
+        return <Text>INVALID STATE</Text>;
     }
+  }
+
+  function renderPosts() {
+    return (
+      <View>
+        {posts.map((post) => (
+          <View>
+            <Text>{post.title}</Text>
+          </View>
+        ))}
+      </View>
+    );
   }
 
   return (
