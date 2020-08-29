@@ -17,7 +17,7 @@ export default function Post(props: PostProps) {
         </View>
       </View>
       <ScrollView style={styles.bodyWrapper}>
-        <Text style={styles.body}>{props.post.body}</Text>
+        <Text>{props.post.body}</Text>
       </ScrollView>
     </View>
   );
@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
 
-  bodyWrapper: { height: 200, margin: 20 },
-  body: { padding: 10, backgroundColor: '#eee' },
+  bodyWrapper: {
+    height: 200,
+    margin: 20,
+    padding: 10,
+    backgroundColor: '#eee',
+  },
 });

@@ -66,9 +66,14 @@ export default function PostList(props: PostListProps) {
   function renderPosts() {
     return (
       <ScrollView>
-        {posts.map((post) => (
-          <Post post={post} />
-        ))}
+        {posts
+          .sort(
+            (first, second) =>
+              second.publishedAt.getTime() - first.publishedAt.getTime()
+          )
+          .map((post) => (
+            <Post post={post} />
+          ))}
       </ScrollView>
     );
   }
