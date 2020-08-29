@@ -41,6 +41,9 @@ export default function PostList(props: PostListProps) {
     fetch(props.src)
       .then((response) => response.json())
       .then((json) => {
+        //Ideally, I would have liked to put in some more fancy type checking here than
+        // merely checking if the status existed (unique to the error), but I'll have to
+        // refamiliarize myself with typescript before I can do it properly.
         if (json.status != null) {
           setDataState(DataState.Failed);
         } else {
@@ -50,6 +53,8 @@ export default function PostList(props: PostListProps) {
       });
   }
 
+  //I was running into issues with the dates getting interpreted as actual dates,
+  // (most likely since json() just doesn't handle that), so I had to manually set them
   function toPostEntity(entity: any) {
     var post: PostEntity = entity;
     post.publishedAt = new Date(entity.publishedAt);
@@ -87,7 +92,7 @@ export default function PostList(props: PostListProps) {
         <Text style={{ margin: 10, fontWeight: 'bold', fontSize: 16 }}>
           Authors
         </Text>
-        <ScrollView style={{ margin: 10 }}>
+        <ScrollView style={{ margin: 10, height: 100 }}>
           <AuthorList posts={posts} />
         </ScrollView>
         <ScrollView>

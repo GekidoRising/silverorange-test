@@ -7,6 +7,9 @@ interface PostProps {
 }
 
 export default function Post(props: PostProps) {
+  //Ideally, I would have a markdown package take care of rendering the body of the post
+  // but unfortunately, I was running into significant difficulty getting any of the packages
+  // I yarned in to work, so I had to leave it as is.
   return (
     <View>
       <View style={styles.header}>
@@ -21,6 +24,11 @@ export default function Post(props: PostProps) {
       </ScrollView>
     </View>
   );
+
+  //As it currently stands, there's no touch interaction of even a separate screen for posts.
+  // Last I knew of react native, I would be using TouchableHighlights or TouchableOpacity to add
+  // onTouch functionality that would navigate to the new page discussed on App.tsx, but from what
+  // I recall researching, there's now a Pressable element which seems a lot more robust.
 }
 
 const styles = StyleSheet.create({
