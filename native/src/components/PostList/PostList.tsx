@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 import { stringify } from 'querystring';
 import { PostAuthor, PostEntity } from './PostEntity';
 import { JSXElement } from '@babel/types';
@@ -36,9 +36,16 @@ export default function PostList(props: PostListProps) {
           setDataState(DataState.Failed);
         } else {
           setDataState(DataState.Loaded);
-          setPosts(json);
+          setPosts(json.map((entity: any) => toPostEntity(entity)));
         }
       });
+  }
+
+  function toPostEntity(entity: any) {
+    var post: PostEntity = entity;
+    post.publishedAt = new Date(entity.publishedAt);
+
+    return post;
   }
 
   function getText(): JSX.Element | JSX.Element[] {
@@ -76,6 +83,7 @@ export default function PostList(props: PostListProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexShrink: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
