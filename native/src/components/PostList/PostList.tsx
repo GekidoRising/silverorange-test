@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  Button,
+  Platform,
+} from 'react-native';
 import { stringify } from 'querystring';
 import { PostAuthor, PostEntity } from './PostEntity';
 import { JSXElement } from '@babel/types';
 import Post from './Post';
+import AuthorList from './AuthorList';
 
 interface PostListProps {
   src: string;
@@ -74,16 +83,22 @@ export default function PostList(props: PostListProps) {
 
   function renderPosts() {
     return (
-      <ScrollView>
-        {posts
-          .sort(
-            (first, second) =>
-              second.publishedAt.getTime() - first.publishedAt.getTime()
-          )
-          .map((post) => (
-            <Post post={post} />
-          ))}
-      </ScrollView>
+      <View>
+        <Text>Authors</Text>
+        <ScrollView>
+          <AuthorList posts={posts} />
+        </ScrollView>
+        <ScrollView>
+          {posts
+            .sort(
+              (first, second) =>
+                second.publishedAt.getTime() - first.publishedAt.getTime()
+            )
+            .map((post) => (
+              <Post post={post} />
+            ))}
+        </ScrollView>
+      </View>
     );
   }
 
