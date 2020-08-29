@@ -94,8 +94,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexShrink: 1,
-    backgroundColor: '#fff',
+    backgroundColor: getOsColor(),
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+//While not the most complex, intricate demonstration of platform specific variance,
+// it's at least something.
+function getOsColor() {
+  switch (Platform.OS) {
+    case 'android':
+      return '#fff2f2';
+    case 'ios':
+      return '#f2f2ff';
+    case 'web':
+      return '#f2fff2';
+    default:
+      return '#fff';
+  }
+}
